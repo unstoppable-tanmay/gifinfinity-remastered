@@ -1,48 +1,17 @@
-import GifContainer from "@/components/GifContainer";
-import Navbar from "@/components/Navbar";
-import { useEffect } from "react";
-import useUser from "../store/useUser";
-import { Spin } from "antd";
-import TrendingComp from "@/components/TrendingComp";
+import Nav from "../../components/Nav";
+import Search from "@/components/Search";
+import Featured from "@/components/Featured";
 
-export default function Home() {
-  const { setIsUser, setUser, mainLoading, setMainLoading, user } = useUser();
-
-  // Function For Getting User Data If The User Logged In Before
-  const getUserData = async (uid: string) => {
-    // const docRef = doc(db, "user", uid);
-    // const docSnap = await getDoc(docRef);
-    // if (docSnap.exists()) {
-    //   const userData = docSnap.data();
-    //   setUser({
-    //     uid: userData.uid,
-    //     name: userData.name,
-    //     email: userData.email,
-    //     saved: userData.saved,
-    //   });
-    // } else {
-    //   console.log("No such document!");
-    // }
-  };
-
-  // For Checking User Is There Or Not
-  useEffect(() => {
-    // auth.onAuthStateChanged(function (user) {
-    //   if (user) {
-    //     setIsUser(true);
-    //     getUserData(user?.uid!);
-    //   }
-    //   setMainLoading(false);
-    // });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+export default async function Home() {
+  // const data = await fetch("http://localhost:3000/api/search", {
+  //   credentials: "include",
+  // });
+  // console.log(data)
   return (
     <main className="w-screen min-h-screen flex items-center justify-start flex-col overflow-x-hidden">
-      <Spin spinning={mainLoading} fullscreen />
-      {/* The Component For The Loading The screen initially */}
-      <Navbar /> {/* The Component For Auth and other stuffs */}
-      <GifContainer /> {/* The Component For The Searching the GIFS */}
-      <TrendingComp /> {/* The Component For The Trending GIF shows in last */}
+      <Nav />
+      <Search />
+      <Featured />
     </main>
   );
 }
