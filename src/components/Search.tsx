@@ -7,36 +7,41 @@ import { getSearchData } from "@/app/actions/actions";
 import { Gif } from "@/types/giftypes";
 import GifCard from "./GifCard";
 import { motion } from "framer-motion";
+import { Pagination } from "antd";
+import useUser from "@/store/useUser";
 
 const Search = () => {
   const [firstTime, setFirstTime] = useState(true);
   const [searchString, setSearchString] = useState("");
   const [gifs, setGifs] = useState<Gif[]>([]);
+  const [page, setPage] = useState(1);
 
-  const handleSearchData = async (searchString: string) => {
-    const response = await getSearchData("hello");
-    console.log(response);
-  };
+  const { user } = useUser();
 
+  // Debouncing
   useEffect(() => {
     if (firstTime) {
       setFirstTime(false);
     } else {
       const timeoutSearchDebouncing = setTimeout(async () => {
         if (searchString.length) {
-          const response: any = await getSearchData(searchString);
+          // const response: any = await getSearchData(searchString,user.id);
+          const response = await fetch(
+            `http://localhost:3000/api/search?searchString=${searchString}&userId=${user.id}`
+          );
 
-          console.log(response)
+          var data = await response.json();
 
-          if(response.err) return alert(response.err)
+          if (data.err) return alert(data.err);
 
-          setGifs(response.data.data);
+          setGifs(data.data.data);
         } else setGifs([]);
       }, 800);
 
       return () => clearTimeout(timeoutSearchDebouncing);
     }
-  }, [searchString, firstTime]);
+  }, [searchString, firstTime, user.id]);
+
   return (
     <div className="search min-h-[80vh] flex w-full items-center justify-center mx-10 mb-20">
       <motion.div
@@ -51,11 +56,21 @@ const Search = () => {
           onChange={(e) => setSearchString(e.target.value)}
         />
         {gifs && gifs.length ? (
-          <div className="gif_container flex flex-wrap w-full justify-center gap-5 max-w-[90vw] p-5">
-            {gifs &&
-              gifs.map((gif, ind) => {
-                return <GifCard key={ind} gif={gif} />;
-              })}
+          <div className="gif_container_wrapper flex flex-col w-full items-center justify-center">
+            <div className="gif_container flex flex-wrap w-full justify-center gap-5 max-w-[90vw] p-5">
+              {gifs &&
+                gifs.slice(page * 15 - 15, page * 15).map((gif, ind) => {
+                  return <GifCard key={ind} string_gif={JSON.stringify(gif)} />;
+                })}
+            </div>
+            <Pagination
+              defaultCurrent={page}
+              pageSize={15}
+              onChange={(e) => {
+                setPage(e);
+              }}
+              total={gifs.length}
+            />
           </div>
         ) : (
           <></>

@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest } from "next/server";
-import { compareSync, genSaltSync } from "bcrypt";
+import { hashSync, genSaltSync } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { cookies } from "next/headers";
 
@@ -9,6 +9,7 @@ const prisma = new PrismaClient();
 
 // Body Type
 type Body = {
+  name: string;
   email: string;
   password: string;
 };
@@ -18,9 +19,16 @@ export async function POST(req: NextRequest) {
   try {
     const body: Body = await req.json();
 
-    console.log(body);
+    // If any field has not send with the body
+    if (!body.email || !body.name || !body.password)
+      return Response.json({ data: false, error: "404 request error" });
 
     // Checking For Not Filled Data
+    if (!body.name)
+      return Response.json({
+        data: false,
+        err: "Name Is Required!!",
+      });
     if (!body.email)
       return Response.json({
         data: false,
@@ -32,37 +40,24 @@ export async function POST(req: NextRequest) {
         err: "Password Is Required!!",
       });
 
-    const { email, password } = body;
-
-    // Generating User
-    const user = await prisma.user.findUnique({ where: { email } });
-
-    // If No user Found
-    if (!user) Response.json({ data: false, err: "No User Found" });
+    const { email, name, password } = body;
 
     //   Hashing password
-    const password_compared = compareSync(password, user?.password!);
+    const password_hashed = hashSync(password, genSaltSync(10));
 
-    // Checking Password
-    if (password_compared)
-      Response.json({ data: false, err: "Given Password is Wrong" });
+    // Generating User
+    const user = await prisma.admin.create({
+      data: { email, name, password: password_hashed },
+    });
 
     // Setting Cookies
     cookies().set(
-      "token",
-      sign(user!.id, process.env.JWT_SECRETE || "tanmay_jwt_secrete")
+      "admintoken",
+      sign(user.id, process.env.JWT_SECRETE || "tanmay_jwt_secrete")
     );
 
-    const liked_gif_by_user = await prisma.like.findMany({
-      where: { userId: user?.id,status:true },
-    });
-
     // Response
-    return Response.json({
-      data: user,
-      liked_gifs: liked_gif_by_user,
-      err: false,
-    });
+    return Response.json({ data: user, err: false });
   } catch (err) {
     console.log(err);
     return Response.json({ data: false, err });

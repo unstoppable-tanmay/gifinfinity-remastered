@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 // SignUp Request
 export async function GET(req: NextRequest) {
   try {
-    const token = cookies().get("token");
+    const token = cookies().get("admintoken");
 
     if (!token) Response.json({ data: false, err: "Login Expired" });
 
@@ -20,22 +20,13 @@ export async function GET(req: NextRequest) {
       return Response.json({ data: false, err: "Not Valid Token" });
 
     // Generating User
-    const user = await prisma.user.findUnique({ where: { id: jwt_token } });
+    const user = await prisma.admin.findUnique({ where: { id: jwt_token } });
 
     // If No user Found
     if (!user)
       Response.json({ data: false, err: "No User Found User May Deleted" });
-
-    const liked_gif_by_user = await prisma.like.findMany({
-      where: { userId: user?.id, status: true },
-    });
-
     // Response
-    return Response.json({
-      data: user,
-      liked_gifs: liked_gif_by_user,
-      err: false,
-    });
+    return Response.json({ data: user, err: false });
   } catch (err) {
     console.log(err);
     return Response.json({ data: false, err });

@@ -32,7 +32,12 @@ const Featured = () => {
       <div className="trendingWrapper max-w-[80vw] rounded-xl flex flex-wrap items-center justify-center gap-5 bg-slate-100 shadow-2xl p-7">
         {data &&
           data.map((gif: Gif, ind: number) => {
-            return <GifCard key={ind} gif={gif} />;
+            return (
+              <GifCard
+                key={ind}
+                string_gif={JSON.stringify(gif)}
+              />
+            );
           })}
       </div>
     </div>

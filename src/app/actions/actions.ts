@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 
 const prisma = new PrismaClient();
 
-export async function getSearchData(searchString: string) {
+export async function getSearchData(searchString: string, userId: string) {
   try {
     const Checking = await checkUser();
 
@@ -19,6 +19,15 @@ export async function getSearchData(searchString: string) {
     );
 
     data = await data.json();
+
+    const added_search = await prisma.search.create({
+      data: { searchString: searchString.split(" "), userId: userId },
+    });
+
+    if (!added_search) {
+      console.log("error in adding to search table");
+      return { data, err: "error in adding to search table" };
+    }
 
     return { data: data, err: false };
   } catch (err) {

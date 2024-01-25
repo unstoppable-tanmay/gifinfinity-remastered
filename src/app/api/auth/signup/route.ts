@@ -23,24 +23,24 @@ export async function POST(req: NextRequest) {
     if (!body.email || !body.name || !body.password)
       return Response.json({ data: false, error: "404 request error" });
 
-    const { email, name, password } = body;
-
     // Checking For Not Filled Data
-    if (!name)
+    if (!body.name)
       return Response.json({
         data: false,
         err: "Name Is Required!!",
       });
-    if (!email)
+    if (!body.email)
       return Response.json({
         data: false,
         err: "Email Is Required!!",
       });
-    if (!password)
+    if (!body.password)
       return Response.json({
         data: false,
         err: "Password Is Required!!",
       });
+
+    const { email, name, password } = body;
 
     //   Hashing password
     const password_hashed = hashSync(password, genSaltSync(10));
@@ -53,15 +53,13 @@ export async function POST(req: NextRequest) {
     // Setting Cookies
     cookies().set(
       "token",
-      sign(user.id, process.env.JWT_SECRETE || "tanmay_jwt_secrete", {
-        expiresIn: "3d",
-      })
+      sign(user.id, process.env.JWT_SECRETE || "tanmay_jwt_secrete")
     );
 
     // Response
     return Response.json({ data: user, err: false });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return Response.json({ data: false, err });
   }
 }

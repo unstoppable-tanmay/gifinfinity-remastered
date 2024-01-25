@@ -35,12 +35,12 @@ export async function POST(req: NextRequest) {
     const { email, password } = body;
 
     // Generating User
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.admin.findUnique({ where: { email } });
 
     // If No user Found
     if (!user) Response.json({ data: false, err: "No User Found" });
 
-    //   Hashing password
+    //   Comparing password
     const password_compared = compareSync(password, user?.password!);
 
     // Checking Password
@@ -49,18 +49,13 @@ export async function POST(req: NextRequest) {
 
     // Setting Cookies
     cookies().set(
-      "token",
+      "admintoken",
       sign(user!.id, process.env.JWT_SECRETE || "tanmay_jwt_secrete")
     );
-
-    const liked_gif_by_user = await prisma.like.findMany({
-      where: { userId: user?.id,status:true },
-    });
 
     // Response
     return Response.json({
       data: user,
-      liked_gifs: liked_gif_by_user,
       err: false,
     });
   } catch (err) {

@@ -1,6 +1,7 @@
 export type Gif = {
   type: string;
   id: string;
+  likedId: string;
   url: string;
   slug: string;
   bitly_gif_url: string;
@@ -16,9 +17,9 @@ export type Gif = {
   is_sticker: number;
   import_datetime: string;
   trending_datetime: string;
-  images: [Object];
+  images: any;
   analytics_response_payload: string;
-  analytics: [Object];
+  analytics: any;
 };
 
 export type GifResponse ={
