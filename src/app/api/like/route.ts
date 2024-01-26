@@ -10,6 +10,7 @@ const prisma = new PrismaClient();
 type Body = {
   gif: string;
   userId: string;
+  searchString: string;
 };
 
 // Like Request
@@ -29,10 +30,15 @@ export async function POST(req: NextRequest) {
         err: "userId Is Required!!",
       });
 
-    const { gif, userId } = body;
+    const { gif, userId, searchString } = body;
 
     const created_like = await prisma.like.create({
-      data: { gif, userId },
+      data: {
+        gif,
+        userId,
+        searchString: searchString ? searchString.split(" ") : [],
+        gifId: JSON.parse(gif).id,
+      },
     });
 
     if (!created_like)

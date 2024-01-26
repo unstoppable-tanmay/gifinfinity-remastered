@@ -1,6 +1,6 @@
-import Nav from "../../components/Nav";
-import Search from "@/components/Search";
-import Featured from "@/components/Featured";
+import Nav from "../../components/userComponents/Nav";
+import Search from "@/components/userComponents/Search";
+import Featured from "@/components/userComponents/Featured";
 
 export default async function Home() {
   // const data = await fetch("http://localhost:3000/api/search", {

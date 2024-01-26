@@ -1,15 +1,14 @@
-import AdminNav from '@/components/AdminNav'
-import React from 'react'
+import AdminNav from "@/components/adminComponents/AdminNav";
+import Analytics from "@/components/adminComponents/Analytics";
+import React from "react";
 
 const Admin = () => {
   return (
-    <div className='w-full min-h-screen flex flex-col'>
-      <AdminNav/>
-      <div className="analytics flex flex-wrap w-full p-6 max-w-[90vw] min-h-screen">
-        
-      </div>
+    <div className="w-full min-h-screen flex flex-col">
+      <AdminNav />
+      <Analytics/>
     </div>
-  )
-}
+  );
+};
 
-export default Admin
+export default Admin;

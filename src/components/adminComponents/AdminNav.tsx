@@ -18,8 +18,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { useCookies } from "react-cookie";
 import { useToast } from "@/components/ui/use-toast";
 import useAdmin from "@/store/useAdmin";

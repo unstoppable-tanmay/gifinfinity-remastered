@@ -19,12 +19,14 @@ model Search {
 }
 
 model Like {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  gif     String
-  userId  String   @db.ObjectId
-  likedAt DateTime @default(now())
-  status  Boolean  @default(true)
-  user    User     @relation(fields: [userId], references: [id])
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  gif          String
+  gifId        String
+  userId       String   @db.ObjectId
+  likedAt      DateTime @default(now())
+  status       Boolean  @default(true)
+  searchString String[]   @default([])
+  user         User     @relation(fields: [userId], references: [id])
 }
 
 model User {

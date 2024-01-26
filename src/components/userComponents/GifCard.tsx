@@ -1,23 +1,20 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 
-import React, {  useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import React, { useEffect, useState } from "react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 import { Gif } from "@/types/giftypes";
 import useUser from "@/store/useUser";
 import { motion } from "framer-motion";
-import { toast } from "./ui/use-toast";
+import { toast } from "../ui/use-toast";
 
 type _Props = {
   string_gif: string;
+  searchString?: string;
 };
 
-const GifCard = ({ string_gif }: _Props) => {
+const GifCard = ({ string_gif, searchString }: _Props) => {
   const [liked, setLiked] = useState(false);
   const [hovered, setHovered] = useState(false);
   const { user, liked_gifs, setLikedGifs } = useUser();
@@ -40,10 +37,10 @@ const GifCard = ({ string_gif }: _Props) => {
     if (liked) {
       // Delete From Liked
       const gifId = liked_gifs.map((e) => {
-        const gif_from_liked = JSON.parse(e.gif)
+        const gif_from_liked = JSON.parse(e.gif);
         if (gif_from_liked.id == gif.id) return e.id;
         else return "";
-      })
+      });
 
       const response = await fetch("http://localhost:3000/api/like", {
         method: "DELETE",
@@ -53,22 +50,26 @@ const GifCard = ({ string_gif }: _Props) => {
       });
 
       const response_data = await response.json();
-      console.log(response_data)
+      console.log(response_data);
 
       if (response_data.data) {
         setLiked(false);
         getLike();
-        toast({title: "DisLiked 🤍"});
+        toast({ title: "DisLiked 🤍" });
       } else {
         setLiked(true);
         console.log(response_data.err);
-        toast({title:"Can't Removed " + response_data.err});
+        toast({ title: "Can't Removed " + response_data.err });
       }
     } else {
       // Add Like
       const response = await fetch("http://localhost:3000/api/like", {
         method: "POST",
-        body: JSON.stringify({ gif:string_gif, userId: user.id }),
+        body: JSON.stringify({
+          gif: string_gif,
+          userId: user.id,
+          searchString,
+        }),
       });
 
       const response_data = await response.json();
@@ -77,10 +78,10 @@ const GifCard = ({ string_gif }: _Props) => {
       if (response_data.data) {
         setLiked(true);
         getLike();
-        toast({title: "Liked ❤"});
+        toast({ title: "Liked ❤" });
       } else {
         setLiked(false);
-        toast({title: "Can Not Liked " + response_data.err});
+        toast({ title: "Can Not Liked ",description:response_data.err });
       }
     }
   };
@@ -88,13 +89,15 @@ const GifCard = ({ string_gif }: _Props) => {
   useEffect(() => {
     var ids: string[] = [];
     liked_gifs.map((e) => {
-      const gif = JSON.parse(e.gif)
+      const gif = JSON.parse(e.gif);
       ids.push(gif.id);
     });
-    console.log(ids)
+    console.log(ids);
     if (ids.includes(gif.id)) setLiked(true);
-    else setLiked(false)
+    else setLiked(false);
   }, [liked_gifs, gif]);
+
+  useEffect(() => {}, [user]);
 
   return (
     <Dialog>

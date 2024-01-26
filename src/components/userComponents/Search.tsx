@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { getSearchData } from "@/app/actions/actions";
 import { Gif } from "@/types/giftypes";
 import GifCard from "./GifCard";
@@ -60,7 +60,13 @@ const Search = () => {
             <div className="gif_container flex flex-wrap w-full justify-center gap-5 max-w-[90vw] p-5">
               {gifs &&
                 gifs.slice(page * 15 - 15, page * 15).map((gif, ind) => {
-                  return <GifCard key={ind} string_gif={JSON.stringify(gif)} />;
+                  return (
+                    <GifCard
+                      key={ind}
+                      string_gif={JSON.stringify(gif)}
+                      searchString={searchString}
+                    />
+                  );
                 })}
             </div>
             <Pagination

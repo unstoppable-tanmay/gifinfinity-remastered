@@ -1,0 +1,273 @@
+[
+    {
+      "name": "Aarav",
+      "email": "aarav@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706166861287"
+        }
+      }
+    },
+    {
+      "name": "Arjun",
+      "email": "arjun@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706167921287"
+        }
+      }
+    },
+    {
+      "name": "Ishita",
+      "email": "ishita@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706166860000"
+        }
+      }
+    },
+    {
+      "name": "Aanya",
+      "email": "aanya@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706256861287"
+        }
+      }
+    },
+    {
+      "name": "Advait",
+      "email": "advait@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706257921287"
+        }
+      }
+    },
+    {
+      "name": "Vihaan",
+      "email": "vihaan@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706256860000"
+        }
+      }
+    },
+    {
+      "name": "Aarush",
+      "email": "aarush@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706356861287"
+        }
+      }
+    },
+    {
+      "name": "Anvi",
+      "email": "anvi@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706357921287"
+        }
+      }
+    },
+    {
+      "name": "Sai",
+      "email": "sai@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706356860000"
+        }
+      }
+    },
+    {
+      "name": "Anaya",
+      "email": "anaya@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706456861287"
+        }
+      }
+    },
+    {
+      "name": "Reyansh",
+      "email": "reyansh@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706457921287"
+        }
+      }
+    },
+    {
+      "name": "Zoya",
+      "email": "zoya@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706456860000"
+        }
+      }
+    },
+    {
+      "name": "Kabir",
+      "email": "kabir@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706556861287"
+        }
+      }
+    },
+    {
+      "name": "Saisha",
+      "email": "saisha@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706557921287"
+        }
+      }
+    },
+    {
+      "name": "Ritvik",
+      "email": "ritvik@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706556860000"
+        }
+      }
+    },
+    {
+      "name": "Vivaan",
+      "email": "vivaan@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706656861287"
+        }
+      }
+    },
+    {
+      "name": "Aisha",
+      "email": "aisha@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706657921287"
+        }
+      }
+    },
+    {
+      "name": "Aryan",
+      "email": "aryan@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706656860000"
+        }
+      }
+    },
+    {
+      "name": "Avi",
+      "email": "avi@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706756861287"
+        }
+      }
+    },
+    {
+      "name": "Anaya",
+      "email": "anaya@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706757921287"
+        }
+      }
+    },
+    {
+      "name": "Aadi",
+      "email": "aadi@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706756860000"
+        }
+      }
+    },
+    {
+      "name": "Riyaan",
+      "email": "riyaan@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706856861287"
+        }
+      }
+    },
+    {
+      "name": "Myra",
+      "email": "myra@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706857921287"
+        }
+      }
+    },
+    {
+      "name": "Vedant",
+      "email": "vedant@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706856860000"
+        }
+      }
+    },
+    {
+      "name": "Kiara",
+      "email": "kiara@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706956861287"
+        }
+      }
+    },
+    {
+      "name": "Advika",
+      "email": "advika@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706957921287"
+        }
+      }
+    },
+    {
+      "name": "Kabir",
+      "email": "kabir@gmail.com",
+      "password": "$2b$10$v58P6sTSfCAQdsyAAwHIqeenYXre7tki18S11ECpCPWmJniT/ZFs6",
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1706956860000"
+        }
+      }
+    }
+  ]
+  

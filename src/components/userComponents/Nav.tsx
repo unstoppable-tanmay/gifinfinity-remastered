@@ -19,8 +19,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import useUser from "@/store/useUser";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { useCookies } from "react-cookie";
 import { useToast } from "@/components/ui/use-toast";
 import GifCard from "./GifCard";
@@ -282,12 +282,7 @@ const Nav = () => {
                         .slice(page * 10 - 10, page * 10)
                         .map((gif, ind: number) => {
                           console.log(gif);
-                          return (
-                            <GifCard
-                              key={ind}
-                              string_gif={gif.gif}
-                            />
-                          );
+                          return <GifCard key={ind} string_gif={gif.gif} />;
                         })}
                   </div>
                   <Pagination

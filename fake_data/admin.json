@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Admin1",
+        "email": "admin1@gmail.com",
+        "password": "$2b$10$kMg3I5Xu5nisQkGXXBy0tu1TxzEAcsUGTNvy2NoXtPC.hUByVzaUy"
+    },
+    {
+        "name": "Admin2",
+        "email": "admin2@gmail.com",
+        "password": "$2b$10$kMg3I5Xu5nisQkGXXBy0tu1TxzEAcsUGTNvy2NoXtPC.hUByVzaUy"
+    },
+    {
+        "name": "Admin3",
+        "email": "admin3@gmail.com",
+        "password": "$2b$10$kMg3I5Xu5nisQkGXXBy0tu1TxzEAcsUGTNvy2NoXtPC.hUByVzaUy"
+    },
+    {
+        "name": "Admin4",
+        "email": "admin4@gmail.com",
+        "password": "$2b$10$kMg3I5Xu5nisQkGXXBy0tu1TxzEAcsUGTNvy2NoXtPC.hUByVzaUy"
+    },
+    {
+        "name": "Admin5",
+        "email": "admin5@gmail.com",
+        "password": "$2b$10$kMg3I5Xu5nisQkGXXBy0tu1TxzEAcsUGTNvy2NoXtPC.hUByVzaUy"
+    }
+]
