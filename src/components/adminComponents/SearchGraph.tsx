@@ -36,7 +36,7 @@ const SearchGraph = () => {
   const getUserSearchTimeLine = async () => {
     setLoading(true);
     const response = await fetch(
-      `http://localhost:3000/api/admin/user-search-like-timeline?ltDate=${ltDate}&gtDate=${gtDate}`
+      `/api/admin/user-search-like-timeline?ltDate=${ltDate}&gtDate=${gtDate}`
     );
 
     const response_data = await response.json();

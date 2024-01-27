@@ -39,7 +39,7 @@ const AdminNav = () => {
 
   const LogIn = async () => {setLoading(true)
     const { email, password } = userDetails;
-    const response = await fetch("http://localhost:3000/api/admin/auth/login", {
+    const response = await fetch("/api/admin/auth/login", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -66,7 +66,7 @@ const AdminNav = () => {
   };
 
   const JWTLogIn = async () => {setLoading(true)
-    const response = await fetch("http://localhost:3000/api/admin/auth");
+    const response = await fetch("/api/admin/auth");
 
     const response_data = await response.json();
 

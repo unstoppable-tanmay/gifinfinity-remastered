@@ -17,7 +17,7 @@ const TopGifs = () => {
 
   const getUserSearchTimeLine = async () => {setLoading(true)
     const response = await fetch(
-      "http://localhost:3000/api/admin/top-liked-gifs"
+      "/api/admin/top-liked-gifs"
     );
 
     const response_data = await response.json();

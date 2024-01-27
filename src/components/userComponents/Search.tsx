@@ -25,7 +25,7 @@ const Search = () => {
         if (searchString.length) {
           setLoading(true);
           const response = await fetch(
-            `http://localhost:3000/api/search?searchString=${searchString}&userId=${user.id}`
+            `/api/search?searchString=${searchString}&userId=${user.id}`
           );
 
           var data = await response.json();

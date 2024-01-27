@@ -22,7 +22,7 @@ const GifCard = ({ string_gif, searchString }: _Props) => {
   const gif: Gif = JSON.parse(string_gif);
 
   const getLike = async () => {
-    const response = await fetch("http://localhost:3000/api/like");
+    const response = await fetch("/api/like");
     const response_data = await response.json();
     if (!response_data.err) {
       setLikedGifs(response_data.likes);
@@ -44,7 +44,7 @@ const GifCard = ({ string_gif, searchString }: _Props) => {
 
       alert(gifId)
 
-      const response = await fetch("http://localhost:3000/api/like", {
+      const response = await fetch("/api/like", {
         method: "DELETE",
         body: JSON.stringify({
           id: gifId,
@@ -65,7 +65,7 @@ const GifCard = ({ string_gif, searchString }: _Props) => {
       }
     } else {
       // Add Like
-      const response = await fetch("http://localhost:3000/api/like", {
+      const response = await fetch("/api/like", {
         method: "POST",
         body: JSON.stringify({
           gif: string_gif,

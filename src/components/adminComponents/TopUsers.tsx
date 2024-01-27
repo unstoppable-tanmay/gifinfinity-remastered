@@ -27,7 +27,7 @@ const TopUsers = () => {
   const getUserSearchTimeLine = async () => {
     setLoading(true);
     const response = await fetch(
-      "http://localhost:3000/api/admin/most-active-user"
+      "/api/admin/most-active-user"
     );
 
     const response_data = await response.json();

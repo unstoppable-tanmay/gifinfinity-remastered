@@ -53,7 +53,7 @@ const Nav = () => {
   const SignUp = async () => {
     setLoading(true);
     const { name, email, password } = userDetails;
-    const response = await fetch("http://localhost:3000/api/auth/signup", {
+    const response = await fetch("/api/auth/signup", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -79,7 +79,7 @@ const Nav = () => {
   const LogIn = async () => {
     setLoading(true);
     const { email, password } = userDetails;
-    const response = await fetch("http://localhost:3000/api/auth/login", {
+    const response = await fetch("/api/auth/login", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -107,7 +107,7 @@ const Nav = () => {
   const JWTLogIn = async () => {
     setLoading(true);
     console.log("jwt started");
-    const response = await fetch("http://localhost:3000/api/auth");
+    const response = await fetch("/api/auth");
 
     const response_data = await response.json();
 
