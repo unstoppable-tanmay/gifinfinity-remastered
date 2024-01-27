@@ -1,11 +1,8 @@
 "use server";
 
 import { PrismaClient } from "@prisma/client";
-import { decode, verify } from "jsonwebtoken";
-import { cookies } from "next/headers";
 
-const prisma = new PrismaClient();
-
+// getting the trending data
 export async function getTrendingData() {
   try {
     var data = await fetch(

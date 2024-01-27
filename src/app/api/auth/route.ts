@@ -13,8 +13,6 @@ export async function GET(req: NextRequest) {
 
     if (!token) return Response.json({ data: false, err: "Login Expired" });
 
-    console.log(token)
-
     // Decoding The Token From The Cookies
     const jwt_token = decode(token?.value!)?.toString();
 
@@ -28,6 +26,7 @@ export async function GET(req: NextRequest) {
     if (!user)
       return Response.json({ data: false, err: "No User Found User May Deleted" });
 
+    // Gifs Likes By User
     const liked_gif_by_user = await prisma.like.findMany({
       where: { userId: user?.id, status: true },
     });

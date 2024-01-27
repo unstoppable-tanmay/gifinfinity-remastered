@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
     if (!user)
       return Response.json({ data: false, err: "No User Found User May Deleted" });
 
-    
+    // Getting Params
     const searchString = req.nextUrl.searchParams.get("searchString");
     const userId = req.nextUrl.searchParams.get("userId");
 
@@ -36,6 +36,7 @@ export async function GET(req: NextRequest) {
     if (!userId)
       return Response.json({ data: false, err: "Please Login First" });
 
+      // Fetching The Gifs With SearchString 
     var data = await fetch(
       `https://api.giphy.com/v1/gifs/search?limit=${40}&q=${searchString}&api_key=${
         process.env.GIPHY_API_KEY
@@ -44,6 +45,7 @@ export async function GET(req: NextRequest) {
 
     data = await data.json();
 
+    // Add the search to database
     const added_search = await prisma.search.create({
       data: { searchString: searchString.split(" "), userId: userId! },
     });

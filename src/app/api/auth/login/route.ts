@@ -13,7 +13,7 @@ type Body = {
   password: string;
 };
 
-// SignUp Request
+// Login Request
 export async function POST(req: NextRequest) {
   try {
     const body: Body = await req.json();
@@ -34,16 +34,16 @@ export async function POST(req: NextRequest) {
 
     const { email, password } = body;
 
-    // Generating User
+    // Getting User With Email
     const user = await prisma.user.findUnique({ where: { email } });
 
     // If No user Found
     if (!user) Response.json({ data: false, err: "No User Found" });
 
-    //   Hashing password
+    // Comparing password
     const password_compared = compareSync(password, user?.password!);
 
-    // Checking Password
+    // Checking Password Given
     if (password_compared)
       Response.json({ data: false, err: "Given Password is Wrong" });
 
@@ -53,6 +53,7 @@ export async function POST(req: NextRequest) {
       sign(user!.id, process.env.JWT_SECRETE || "tanmay_jwt_secrete")
     );
 
+    // Finding Gifs Liked By User
     const liked_gif_by_user = await prisma.like.findMany({
       where: { userId: user?.id,status:true },
     });

@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
 
     const body: Body = await req.json();
 
-    // Checking For Not Filled Data
+    // Checking For Not Given Data
     if (!body.gif)
       return Response.json({
         data: false,
@@ -52,6 +52,7 @@ export async function POST(req: NextRequest) {
 
     const { gif, userId, searchString } = body;
 
+    // Create Like
     const created_like = await prisma.like.create({
       data: {
         gif,
@@ -61,6 +62,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    // if Not Created
     if (!created_like)
       return Response.json({
         data: false,
@@ -103,7 +105,7 @@ export async function DELETE(req: NextRequest) {
 
     const body: { id: string } = await req.json();
 
-    // Checking For Not Filled Data
+    // Checking For Not Given Data
     if (!body.id)
       return Response.json({
         data: false,
@@ -112,6 +114,7 @@ export async function DELETE(req: NextRequest) {
 
     const { id } = body;
 
+    // Update The status Of like
     const updated_like = await prisma.like.update({
       data: { status: false },
       where: { id },
@@ -143,6 +146,7 @@ export async function GET(req: NextRequest) {
     if (!jwt_token)
       return Response.json({ data: false, err: "Not Valid Token" });
 
+      // Getting The Likes Of a User
     const likes = await prisma.like.findMany({
       where: { userId: jwt_token, status: true },
     });

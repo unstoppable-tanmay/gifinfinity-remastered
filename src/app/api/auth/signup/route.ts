@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
 
     const { email, name, password } = body;
 
-    //   Hashing password
+    // Hashing password
     const password_hashed = hashSync(password, genSaltSync(10));
 
     // Generating User
