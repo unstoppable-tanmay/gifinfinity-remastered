@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { getSearchData } from "@/app/actions/actions";
 import { Gif } from "@/types/giftypes";
 import GifCard from "./GifCard";
 import { motion } from "framer-motion";
