@@ -24,16 +24,27 @@ export async function GET(req: NextRequest) {
     // If No user Found
     if (!user) Response.json({ data: false, err: "You Are Not Permitted" });
 
+    const gtDate = req.nextUrl.searchParams.get("gtDate");
+    const ltDate = req.nextUrl.searchParams.get("ltDate");
+
+    // if (gtDate && ltDate)
+    //   console.log(
+    //     new Date(gtDate!).toISOString(),
+    //     new Date(ltDate!).toISOString()
+    //   );
+
     const aggregateTopSearchData = await prisma.search.aggregateRaw({
       pipeline: [
-        {
-          $match: {
-            searchedAt: {
-              $gte: { $date: "2024-01-20T00:00:00Z" },
-              $lt: { $date: "2024-01-28T00:00:00Z" },
-            },
-          },
-        },
+        ltDate && gtDate
+          ? {
+              $match: {
+                searchedAt: {
+                  $gte: { $date: gtDate },
+                  $lt: { $date: ltDate },
+                },
+              },
+            }
+          : { $match: {} },
         {
           $unwind: {
             path: "$searchString",
@@ -68,14 +79,16 @@ export async function GET(req: NextRequest) {
 
     const aggregateTopLikeData = await prisma.like.aggregateRaw({
       pipeline: [
-        {
-          $match: {
-            likedAt: {
-              $gte: { $date: "2024-01-20T00:00:00Z" },
-              $lt: { $date: "2024-01-28T00:00:00Z" },
-            },
-          },
-        },
+        ltDate && gtDate
+          ? {
+              $match: {
+                likedAt: {
+                  $gte: { $date: gtDate },
+                  $lt: { $date: ltDate },
+                },
+              },
+            }
+          : { $match: {} },
         {
           $unwind: {
             path: "$searchString",

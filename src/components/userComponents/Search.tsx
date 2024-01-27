@@ -16,7 +16,7 @@ const Search = () => {
   const [gifs, setGifs] = useState<Gif[]>([]);
   const [page, setPage] = useState(1);
 
-  const { user } = useUser();
+  const { user, setLoading } = useUser();
 
   // Debouncing
   useEffect(() => {
@@ -25,7 +25,7 @@ const Search = () => {
     } else {
       const timeoutSearchDebouncing = setTimeout(async () => {
         if (searchString.length) {
-          // const response: any = await getSearchData(searchString,user.id);
+          setLoading(true);
           const response = await fetch(
             `http://localhost:3000/api/search?searchString=${searchString}&userId=${user.id}`
           );
@@ -35,6 +35,7 @@ const Search = () => {
           if (data.err) return alert(data.err);
 
           setGifs(data.data.data);
+          setLoading(false);
         } else setGifs([]);
       }, 800);
 

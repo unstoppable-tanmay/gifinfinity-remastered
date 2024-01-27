@@ -6,12 +6,14 @@ import { cookies } from "next/headers";
 // Prisma Client
 const prisma = new PrismaClient();
 
-// SignUp Request
+// Login With JWT Request
 export async function GET(req: NextRequest) {
   try {
     const token = cookies().get("token");
 
-    if (!token) Response.json({ data: false, err: "Login Expired" });
+    if (!token) return Response.json({ data: false, err: "Login Expired" });
+
+    console.log(token)
 
     // Decoding The Token From The Cookies
     const jwt_token = decode(token?.value!)?.toString();
@@ -24,7 +26,7 @@ export async function GET(req: NextRequest) {
 
     // If No user Found
     if (!user)
-      Response.json({ data: false, err: "No User Found User May Deleted" });
+      return Response.json({ data: false, err: "No User Found User May Deleted" });
 
     const liked_gif_by_user = await prisma.like.findMany({
       where: { userId: user?.id, status: true },

@@ -40,12 +40,14 @@ const GifCard = ({ string_gif, searchString }: _Props) => {
         const gif_from_liked = JSON.parse(e.gif);
         if (gif_from_liked.id == gif.id) return e.id;
         else return "";
-      });
+      })[0];
+
+      alert(gifId)
 
       const response = await fetch("http://localhost:3000/api/like", {
         method: "DELETE",
         body: JSON.stringify({
-          id: gifId[0],
+          id: gifId,
         }),
       });
 
@@ -92,7 +94,6 @@ const GifCard = ({ string_gif, searchString }: _Props) => {
       const gif = JSON.parse(e.gif);
       ids.push(gif.id);
     });
-    console.log(ids);
     if (ids.includes(gif.id)) setLiked(true);
     else setLiked(false);
   }, [liked_gifs, gif]);

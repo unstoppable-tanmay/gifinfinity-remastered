@@ -1,29 +1,15 @@
 import React from "react";
 import GifCard from "./GifCard";
 import { gif_data } from "@/app/(home)/data";
-import { Gif } from "@/types/giftypes";
+import { Gif, GifResponse } from "@/types/giftypes";
+import { getTrendingData } from "@/app/actions/actions";
 
-// Trending Data
-async function getTrendingData() {
-  var response = await fetch(
-    `https://api.giphy.com/v1/gifs/trending?limit=${20}&api_key=${
-      process.env.GIPHY_API_KEY
-    }`
-  );
-
-  const data = await response.json();
-
-  console.log(data);
-
-  return data;
-}
-
-const Featured = () => {
+const Featured = async () => {
   // On Arrival The Data From Trending Comes to the client from the server fetch.
-  // const response:GifResponse = await getTrendingData();
-  // const data = await response.data
+  const response:any = await getTrendingData();
+  const data = response.data
 
-  const data: any = gif_data;
+  // const data: any = gif_data;
   return (
     <div className="featured flex flex-col gap-5 items-center justify-center">
       <div className="header font-bold text-2xl text-slate-700">

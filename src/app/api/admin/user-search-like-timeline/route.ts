@@ -3,10 +3,8 @@ import { NextRequest } from "next/server";
 import { decode } from "jsonwebtoken";
 import { cookies } from "next/headers";
 
-
 // Get Data Request
 export async function GET(req: NextRequest) {
-
   // Prisma Client
   const prisma = new PrismaClient();
 
@@ -27,16 +25,23 @@ export async function GET(req: NextRequest) {
     // If No user Found
     if (!user) Response.json({ data: false, err: "You Are Not Permitted" });
 
+    const gtDate = req.nextUrl.searchParams.get("gtDate");
+    const ltDate = req.nextUrl.searchParams.get("ltDate");
+
+    console.log(gtDate, ltDate);
+
     const aggregateSearchTimelineData = await prisma.search.aggregateRaw({
       pipeline: [
-        {
-          $match: {
-            searchedAt: {
-              $gte: {$date:"2024-01-20T00:00:00Z"},
-              $lt: {$date:"2024-01-28T00:00:00Z"},
-            },
-          },
-        },
+        ltDate && gtDate
+          ? {
+              $match: {
+                searchedAt: {
+                  $gte: { $date: gtDate },
+                  $lt: { $date: ltDate },
+                },
+              },
+            }
+          : { $match: {} },
         {
           $group: {
             _id: {
@@ -79,14 +84,16 @@ export async function GET(req: NextRequest) {
 
     const aggregateUserTimelineData = await prisma.user.aggregateRaw({
       pipeline: [
-        {
-          $match: {
-            createdAt: {
-              $gte: {$date:"2024-01-20T00:00:00Z"},
-              $lt: {$date:"2024-01-28T00:00:00Z"},
-            },
-          },
-        },
+        ltDate && gtDate
+          ? {
+              $match: {
+                createdAt: {
+                  $gte: { $date: gtDate },
+                  $lt: { $date: ltDate },
+                },
+              },
+            }
+          : { $match: {} },
         {
           $group: {
             _id: {
@@ -129,14 +136,16 @@ export async function GET(req: NextRequest) {
 
     const aggregateLikeTimelineData = await prisma.like.aggregateRaw({
       pipeline: [
-        {
-          $match: {
-            likedAt: {
-              $gte: {$date:"2024-01-20T00:00:00Z"},
-              $lt: {$date:"2024-01-28T00:00:00Z"},
-            },
-          },
-        },
+        ltDate && gtDate
+          ? {
+              $match: {
+                likedAt: {
+                  $gte: { $date: gtDate },
+                  $lt: { $date: ltDate },
+                },
+              },
+            }
+          : { $match: {} },
         {
           $group: {
             _id: {
@@ -189,7 +198,7 @@ export async function GET(req: NextRequest) {
   } catch (err) {
     console.log(err);
     return Response.json({ data: false, err });
-  }finally{
-    prisma.$disconnect()
+  } finally {
+    prisma.$disconnect();
   }
 }

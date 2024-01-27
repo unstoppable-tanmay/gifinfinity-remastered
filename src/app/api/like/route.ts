@@ -16,6 +16,26 @@ type Body = {
 // Like Request
 export async function POST(req: NextRequest) {
   try {
+    const token = cookies().get("token");
+
+    if (!token) return Response.json({ data: false, err: "Login Expired" });
+
+    // Decoding The Token From The Cookies
+    const jwt_token = decode(token?.value!)?.toString();
+
+    if (!jwt_token)
+      return Response.json({ data: false, err: "Not Valid Token" });
+
+    // Generating User
+    const user = await prisma.user.findUnique({ where: { id: jwt_token } });
+
+    // If No user Found
+    if (!user)
+      return Response.json({
+        data: false,
+        err: "No User Found User May Deleted",
+      });
+
     const body: Body = await req.json();
 
     // Checking For Not Filled Data
@@ -61,6 +81,26 @@ export async function POST(req: NextRequest) {
 // Remove From Like Request
 export async function DELETE(req: NextRequest) {
   try {
+    const token = cookies().get("token");
+
+    if (!token) return Response.json({ data: false, err: "Login Expired" });
+
+    // Decoding The Token From The Cookies
+    const jwt_token = decode(token?.value!)?.toString();
+
+    if (!jwt_token)
+      return Response.json({ data: false, err: "Not Valid Token" });
+
+    // Generating User
+    const user = await prisma.user.findUnique({ where: { id: jwt_token } });
+
+    // If No user Found
+    if (!user)
+      return Response.json({
+        data: false,
+        err: "No User Found User May Deleted",
+      });
+
     const body: { id: string } = await req.json();
 
     // Checking For Not Filled Data
@@ -95,7 +135,7 @@ export async function GET(req: NextRequest) {
   try {
     const token = cookies().get("token");
 
-    if (!token) Response.json({ data: false, err: "Login Expired" });
+    if (!token) return Response.json({ data: false, err: "Login Expired" });
 
     // Decoding The Token From The Cookies
     const jwt_token = decode(token?.value!)?.toString();

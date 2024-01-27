@@ -28,37 +28,18 @@ export async function GET(req: NextRequest) {
     const aggregateMostActiveUser = await prisma.search.aggregateRaw({
       pipeline: [
         {
-          $lookup: {
-            from: "Search",
-            localField: "userId",
-            foreignField: "userId",
-            as: "searches",
-          },
-        },
-        {
           $group: {
             _id: "$userId",
-            totalSearches: {
-              $sum: 1,
-            },
-            totalLikes: {
-              $sum: {
-                $cond: {
-                  if: "$status",
-                  then: 1,
-                  else: 0,
-                },
-              },
-            },
+            totalSearches: { $sum: 1 },
           },
         },
         {
-          $sort: {
-            totalLikes: -1,
+          $lookup: {
+            from: "Like",
+            localField: "_id",
+            foreignField: "userId",
+            as: "likes",
           },
-        },
-        {
-          $limit: 20,
         },
         {
           $lookup: {
@@ -69,18 +50,18 @@ export async function GET(req: NextRequest) {
           },
         },
         {
-          $unwind: "$user",
-        },
-        {
           $project: {
             _id: 1,
-            totalLikes: 1,
             totalSearches: 1,
-            name: "$user.name",
+            totalLikes: { $size: "$likes" },
+            user: { $arrayElemAt: ["$user", 0] },
           },
         },
+        { $limit: 20 },
       ],
     });
+
+    // lookup the Search table then unwind then group by Search table userId with _id
 
     // Response
     return Response.json({

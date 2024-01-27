@@ -23,6 +23,7 @@ import { Button } from "../ui/button";
 import { useCookies } from "react-cookie";
 import { useToast } from "@/components/ui/use-toast";
 import useAdmin from "@/store/useAdmin";
+import { Spin } from "antd";
 
 const AdminNav = () => {
   const [userDetails, setUserDetails] = useState({
@@ -34,9 +35,9 @@ const AdminNav = () => {
   const [cookie, setCookies, removeCookie] = useCookies(["admintoken"]);
   const { toast } = useToast();
 
-  const { admin, isAdmin, setAdmin, setIsAdmin } = useAdmin();
+  const { admin, isAdmin, setAdmin, setIsAdmin,loading,setLoading } = useAdmin();
 
-  const LogIn = async () => {
+  const LogIn = async () => {setLoading(true)
     const { email, password } = userDetails;
     const response = await fetch("http://localhost:3000/api/admin/auth/login", {
       method: "POST",
@@ -61,9 +62,10 @@ const AdminNav = () => {
       description: Date.now(),
     });
     setOpenModal(false);
+    setLoading(false)
   };
 
-  const JWTLogIn = async () => {
+  const JWTLogIn = async () => {setLoading(true)
     const response = await fetch("http://localhost:3000/api/admin/auth");
 
     const response_data = await response.json();
@@ -80,10 +82,10 @@ const AdminNav = () => {
       title: "Logged In",
       description: Date.now(),
     });
-    setOpenModal(false);
+    setOpenModal(false);setLoading(false)
   };
 
-  const LogOut = () => {
+  const LogOut = () => {setLoading(true)
     if (!isAdmin) {
       setOpenModal(true);
       return;
@@ -94,7 +96,7 @@ const AdminNav = () => {
       title: "Logged Out",
       description: Date.now(),
     });
-    setAdmin({ email: "", id: "", name: "" });
+    setAdmin({ email: "", id: "", name: "" });setLoading(false)
   };
 
   useEffect(() => {
@@ -104,10 +106,11 @@ const AdminNav = () => {
 
   return (
     <div className="w-full flex px-6 py-3 justify-between items-center">
+      <Spin spinning={loading} fullscreen />
       <div className="font-medium text-lg">InfinityGIF</div>
       <div className="flex gap-5 items-center justify-center">
-        <div className="name font-medium text-lg">Hello {admin.name} !</div>
-        <Button className="bg-orange-600" onClick={LogOut}>
+        {isAdmin&& <div className="name font-medium text-lg">Hello {admin.name} !</div>}
+        <Button className={isAdmin?"bg-orange-600":"bg-green-600"} onClick={LogOut}>
           {isAdmin ? "LogOut" : "Login"}
         </Button>
       </div>

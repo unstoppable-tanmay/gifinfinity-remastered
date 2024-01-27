@@ -13,6 +13,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { DatePicker } from "antd";
 
 type TopKeywordsType = {
   [keyword: string]: {
@@ -23,15 +24,18 @@ type TopKeywordsType = {
 };
 
 const TopKeywords = () => {
-  const { keyword, setKeyword } = useAdmin();
+  const { keyword, setKeyword, setLoading } = useAdmin();
   var top_keyword_data: TopKeywordsType = {};
   const [dataForGraph, setDataForGraph] = useState<
     { keyword: string; like: number; search: number; date: string }[]
   >([]);
+  const [ltDate, setLtDate] = useState("");
+  const [gtDate, setGtDate] = useState("");
 
   const getUserSearchTimeLine = async () => {
+    setLoading(true);
     const response = await fetch(
-      "http://localhost:3000/api/admin/top-search-like"
+      `http://localhost:3000/api/admin/top-search-like?ltDate=${ltDate}&gtDate=${gtDate}`
     );
 
     const response_data = await response.json();
@@ -41,11 +45,12 @@ const TopKeywords = () => {
     console.log(data);
 
     setKeyword(data);
+    setLoading(false);
   };
 
   useEffect(() => {
     getUserSearchTimeLine();
-  }, []);
+  }, [ltDate, gtDate]);
 
   function addToMap(
     property: "like" | "search",
@@ -112,6 +117,20 @@ const TopKeywords = () => {
             <Line type="monotone" dataKey="user" stroke="#B85A4C" />
           </LineChart>
         </ResponsiveContainer>
+      </div>
+      <div className="date w-full flex justify-between px-3 flex-wrap gap-4">
+        <DatePicker
+          placeholder="Greater Than Date"
+          onChange={(date, dateString) => {
+            dateString && setGtDate(new Date(dateString).toISOString());
+          }}
+        />
+        <DatePicker
+          placeholder="Lower Than Date"
+          onChange={(date, dateString) => {
+            dateString && setLtDate(new Date(dateString).toISOString());
+          }}
+        />
       </div>
     </div>
   );

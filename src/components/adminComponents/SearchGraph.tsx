@@ -1,6 +1,7 @@
 "use client";
 
 import useAdmin from "@/store/useAdmin";
+import { DatePicker } from "antd";
 import React, { useEffect, useState } from "react";
 
 import {
@@ -13,6 +14,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+// import DatePicker from "../DatePicker";
 
 type TimeLineGraphDataMapType = {
   [date: string]: {
@@ -23,15 +25,18 @@ type TimeLineGraphDataMapType = {
 };
 
 const SearchGraph = () => {
-  const { setTimeLine, timeline } = useAdmin();
+  const { setTimeLine, timeline, loading, setLoading } = useAdmin();
   var search_graph_data: TimeLineGraphDataMapType = {};
   const [dataForGraph, setDataForGraph] = useState<
     { like: number; search: number; user: number; date: string }[]
   >([]);
+  const [ltDate, setLtDate] = useState("");
+  const [gtDate, setGtDate] = useState("");
 
   const getUserSearchTimeLine = async () => {
+    setLoading(true);
     const response = await fetch(
-      "http://localhost:3000/api/admin/user-search-like-timeline"
+      `http://localhost:3000/api/admin/user-search-like-timeline?ltDate=${ltDate}&gtDate=${gtDate}`
     );
 
     const response_data = await response.json();
@@ -41,11 +46,12 @@ const SearchGraph = () => {
     console.log(data);
 
     setTimeLine(data);
+    setLoading(false);
   };
 
   useEffect(() => {
     getUserSearchTimeLine();
-  }, []);
+  }, [ltDate, gtDate]);
 
   function addToMap(
     property: keyof TimeLineGraphDataMapType[string],
@@ -63,7 +69,21 @@ const SearchGraph = () => {
     search_graph_data[date][property] = value;
   }
 
+  const compareDates = (date1: string, date2: string) => {
+    const [day1, month1, year1] = date1.split("-").map(Number);
+    const [day2, month2, year2] = date2.split("-").map(Number);
+
+    if (year1 !== year2) {
+      return year1 - year2;
+    }
+    if (month1 !== month2) {
+      return month1 - month2;
+    }
+    return day1 - day2;
+  };
+
   useEffect(() => {
+    setLoading(true);
     timeline &&
       timeline.aggregateLikeTimelineData.map((e) =>
         addToMap("like", e.totalLikes, e.date)
@@ -77,21 +97,26 @@ const SearchGraph = () => {
         addToMap("user", e.totalUser, e.date)
       );
 
-    const arrayFromMap = Object.entries(search_graph_data).map(
+    var arrayFromMap = Object.entries(search_graph_data).map(
       ([date, values]) => ({
         date,
         ...values,
       })
     );
 
+    arrayFromMap = arrayFromMap.sort((a, b) => compareDates(a.date, b.date));
+
     setDataForGraph(arrayFromMap);
 
     console.log(arrayFromMap);
+    setLoading(false);
   }, [timeline]);
 
   return (
-    <div className="search_graph border-2 border-gray-100 p-4 rounded-xl shadow-xl flex gap-4 flex-col items-center justify-center self-center min-w-[58%]">
-      <div className="heading font-semibold text-xl">User, Searches & Like TimeLine</div>
+    <div className="search_graph border-2 border-gray-100 p-4 rounded-xl shadow-xl flex gap-4 flex-col items-center justify-center self-center min-w-[58%] max-w-[90vw]">
+      <div className="heading font-semibold text-xl">
+        User, Searches & Like TimeLine
+      </div>
       <div
         className="search_graph"
         style={{ width: "100%", height: "300px", maxWidth: "90vw" }}
@@ -113,6 +138,20 @@ const SearchGraph = () => {
             <Line type="monotone" dataKey="user" stroke="#B85A4C" />
           </LineChart>
         </ResponsiveContainer>
+      </div>
+      <div className="date w-full flex justify-between px-3 flex-wrap gap-4">
+        <DatePicker
+          placeholder="Greater Than Date"
+          onChange={(date, dateString) => {
+            dateString && setGtDate(new Date(dateString).toISOString());
+          }}
+        />
+        <DatePicker
+          placeholder="Lower Than Date"
+          onChange={(date, dateString) => {
+            dateString && setLtDate(new Date(dateString).toISOString());
+          }}
+        />
       </div>
     </div>
   );

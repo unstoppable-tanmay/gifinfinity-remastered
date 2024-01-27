@@ -12,6 +12,11 @@
     "tailwindcss",
     "tanmaypanda",
     "timelinetype",
+    "topgifs",
+    "topgifstype",
+    "topusers",
+    "topuserstype",
+    "topusertype",
     "zustand"
   ]
 }
