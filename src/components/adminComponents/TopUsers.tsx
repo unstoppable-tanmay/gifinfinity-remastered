@@ -26,19 +26,27 @@ const TopUsers = () => {
 
   const getUserSearchTimeLine = async () => {
     setLoading(true);
-    const response = await fetch(
-      "/api/admin/most-active-user"
-    );
+    const response = await fetch("/api/admin/most-active-user", {
+      credentials: "include",
+    });
 
     const response_data = await response.json();
 
-    var { aggregateMostActiveUser } = response_data.data;
+    var { aggregateMostActiveUser } = await response_data.data;
 
-    aggregateMostActiveUser = aggregateMostActiveUser.sort(compareFunction);
+    if (aggregateMostActiveUser && aggregateMostActiveUser.length) {
+      aggregateMostActiveUser = aggregateMostActiveUser.sort(compareFunction);
 
-    console.log(aggregateMostActiveUser);
+      console.log(aggregateMostActiveUser);
 
-    setTopUsers(aggregateMostActiveUser);
+      setTopUsers(aggregateMostActiveUser);
+    } else {
+      console.log(
+        aggregateMostActiveUser,
+        "aggregateMostActiveUser length is short"
+      );
+    }
+
     setLoading(false);
   };
 
@@ -47,7 +55,7 @@ const TopUsers = () => {
   }, []);
 
   return (
-    <div className="search_graph border-2 border-gray-100 p-4 rounded-xl shadow-xl flex gap-4 flex-col items-center justify-center self-center flex-1 min-w-[100%]">
+    <div className="top_user border-2 border-gray-100 p-4 rounded-xl shadow-xl flex gap-4 flex-col items-center justify-center self-center flex-1 min-w-[100%]">
       <div className="heading font-semibold text-xl">Most Active User</div>
       <div className="like table w-full max-w-[90vw]">
         <Table>
@@ -58,7 +66,8 @@ const TopUsers = () => {
               <TableHead>Likes</TableHead>
             </TableRow>
           </TableHeader>
-          {topusers.length &&
+          {topusers &&
+            topusers.length &&
             topusers.map((e, ind) => (
               <TableBody key={ind}>
                 <TableRow>

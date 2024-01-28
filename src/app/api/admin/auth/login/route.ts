@@ -61,5 +61,7 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.log(err);
     return Response.json({ data: false, err });
+  }finally{
+    prisma.$disconnect()
   }
 }

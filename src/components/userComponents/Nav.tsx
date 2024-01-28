@@ -54,6 +54,7 @@ const Nav = () => {
     setLoading(true);
     const { name, email, password } = userDetails;
     const response = await fetch("/api/auth/signup", {
+      credentials: "include",
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -63,14 +64,13 @@ const Nav = () => {
 
     const response_data = await response.json();
 
-    if (!response_data.data) return alert(response_data.error);
+    if (!response_data.data) return toast({ title: "SignUp Error" });
 
     console.log(response_data.data);
     setUser(response_data.data);
     setIsUser(true);
     toast({
       title: "Signed Up",
-      description: Date.now(),
     });
     setOpenModal(false);
     setLoading(false);
@@ -80,6 +80,7 @@ const Nav = () => {
     setLoading(true);
     const { email, password } = userDetails;
     const response = await fetch("/api/auth/login", {
+      credentials: "include",
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -89,7 +90,7 @@ const Nav = () => {
 
     const response_data = await response.json();
 
-    if (response_data.err) return alert(response_data.err);
+    if (response_data.err) return toast({ title:"LogIn Error" });
 
     setUser(response_data.data);
     setIsUser(true);
@@ -97,8 +98,7 @@ const Nav = () => {
     setLikedGifs(response_data.liked_gifs);
 
     toast({
-      title: "Logged In",
-      description: Date.now(),
+      title: "Logged In"
     });
     setOpenModal(false);
     setLoading(false);
@@ -107,16 +107,18 @@ const Nav = () => {
   const JWTLogIn = async () => {
     setLoading(true);
     console.log("jwt started");
-    const response = await fetch("/api/auth");
+    const response = await fetch("/api/auth", {
+      credentials: "include"
+    });
 
     const response_data = await response.json();
 
-    if (response_data.err){
-      setLoading(false)
+    if (response_data.err) {
+      setLoading(false);
       return toast({
-        title: "Not Logged In",
-        description: response_data.err,
-      });}
+        title: "Not Logged In"
+      });
+    }
 
     console.log(response_data);
     setUser(response_data.data);
@@ -136,8 +138,7 @@ const Nav = () => {
     removeCookie("token");
     setIsUser(false);
     toast({
-      title: "Logged Out",
-      description: Date.now(),
+      title: "Logged Out"
     });
     setUser({ email: "", featured: [], id: "", liked: [], name: "" });
     setLikedGifs([]);
@@ -303,7 +304,6 @@ const Nav = () => {
                         liked_gifs
                           .slice(page * 10 - 10, page * 10)
                           .map((gif, ind: number) => {
-                            console.log(gif);
                             return <GifCard key={ind} string_gif={gif.gif} />;
                           })}
                     </div>

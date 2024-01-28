@@ -35,11 +35,14 @@ const AdminNav = () => {
   const [cookie, setCookies, removeCookie] = useCookies(["admintoken"]);
   const { toast } = useToast();
 
-  const { admin, isAdmin, setAdmin, setIsAdmin,loading,setLoading } = useAdmin();
+  const { admin, isAdmin, setAdmin, setIsAdmin, loading, setLoading } =
+    useAdmin();
 
-  const LogIn = async () => {setLoading(true)
+  const LogIn = async () => {
+    setLoading(true);
     const { email, password } = userDetails;
     const response = await fetch("/api/admin/auth/login", {
+      credentials: "include",
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -51,7 +54,10 @@ const AdminNav = () => {
 
     console.log(response_data);
 
-    if (response_data.err) return alert(response_data.err);
+    if (response_data.err) {
+      setLoading(false);
+      return alert(response_data.err);
+    }
 
     console.log(response_data.data);
     setAdmin(response_data.data);
@@ -62,16 +68,20 @@ const AdminNav = () => {
       description: Date.now(),
     });
     setOpenModal(false);
-    setLoading(false)
+    setLoading(false);
   };
 
-  const JWTLogIn = async () => {setLoading(true)
-    const response = await fetch("/api/admin/auth");
+  const JWTLogIn = async () => {
+    setLoading(true);
+    const response = await fetch("/api/admin/auth", {
+      credentials: "include"
+    });
 
     const response_data = await response.json();
 
     if (response_data.err) {
       setOpenModal(true);
+      setLoading(false);
       return;
     }
 
@@ -82,12 +92,15 @@ const AdminNav = () => {
       title: "Logged In",
       description: Date.now(),
     });
-    setOpenModal(false);setLoading(false)
+    setOpenModal(false);
+    setLoading(false);
   };
 
-  const LogOut = () => {setLoading(true)
+  const LogOut = () => {
+    setLoading(true);
     if (!isAdmin) {
       setOpenModal(true);
+      setLoading(false);
       return;
     }
     removeCookie("admintoken");
@@ -96,7 +109,8 @@ const AdminNav = () => {
       title: "Logged Out",
       description: Date.now(),
     });
-    setAdmin({ email: "", id: "", name: "" });setLoading(false)
+    setAdmin({ email: "", id: "", name: "" });
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -109,8 +123,13 @@ const AdminNav = () => {
       <Spin spinning={loading} fullscreen />
       <div className="font-medium text-lg">InfinityGIF</div>
       <div className="flex gap-5 items-center justify-center">
-        {isAdmin&& <div className="name font-medium text-lg">Hello {admin.name} !</div>}
-        <Button className={isAdmin?"bg-orange-600":"bg-green-600"} onClick={LogOut}>
+        {isAdmin && (
+          <div className="name font-medium text-lg">Hello {admin.name} !</div>
+        )}
+        <Button
+          className={isAdmin ? "bg-orange-600" : "bg-green-600"}
+          onClick={LogOut}
+        >
           {isAdmin ? "LogOut" : "Login"}
         </Button>
       </div>

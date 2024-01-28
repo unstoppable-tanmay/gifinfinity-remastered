@@ -7,6 +7,7 @@ import GifCard from "./GifCard";
 import { motion } from "framer-motion";
 import { Pagination } from "antd";
 import useUser from "@/store/useUser";
+import { useToast } from "../ui/use-toast";
 
 const Search = () => {
   const [firstTime, setFirstTime] = useState(true);
@@ -16,21 +17,26 @@ const Search = () => {
 
   const { user, setLoading } = useUser();
 
+  const { toast } = useToast();
+
   // Debouncing
   useEffect(() => {
     if (firstTime) {
       setFirstTime(false);
     } else {
       const timeoutSearchDebouncing = setTimeout(async () => {
+        console.log(searchString);
         if (searchString.length) {
           setLoading(true);
           const response = await fetch(
-            `/api/search?searchString=${searchString}&userId=${user.id}`
+            `/api/search?searchString=${searchString}&userId=${user.id}`, {
+              credentials: "include"
+            }
           );
 
           var data = await response.json();
 
-          if (data.err) return alert(data.err);
+          if (data.err) return toast({ title: data.err });
 
           setGifs(data.data.data);
           setLoading(false);
@@ -39,7 +45,7 @@ const Search = () => {
 
       return () => clearTimeout(timeoutSearchDebouncing);
     }
-  }, [searchString, firstTime, user.id]);
+  }, [searchString, firstTime, user.id, setLoading, toast]);
 
   return (
     <div className="search min-h-[80vh] flex w-full items-center justify-center mx-10 mb-20">

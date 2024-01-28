@@ -1,9 +1,11 @@
+"use client";
+
 import Nav from "../../components/userComponents/Nav";
 import Search from "@/components/userComponents/Search";
 import Featured from "@/components/userComponents/Featured";
 import Link from "next/link";
 
-export default async function Home() {
+export default function Home() {
   return (
     <main className="w-screen min-h-screen flex items-center justify-start flex-col overflow-x-hidden relative">
       <Nav />

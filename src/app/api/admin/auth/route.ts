@@ -8,8 +8,8 @@ const prisma = new PrismaClient();
 
 // SignUp Request
 export async function GET(req: NextRequest) {
+  const token = cookies().get("admintoken");
   try {
-    const token = cookies().get("admintoken");
 
     if (!token) Response.json({ data: false, err: "Login Expired" });
 
@@ -30,5 +30,7 @@ export async function GET(req: NextRequest) {
   } catch (err) {
     console.log(err);
     return Response.json({ data: false, err });
+  }finally{
+    prisma.$disconnect()
   }
 }

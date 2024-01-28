@@ -22,7 +22,9 @@ const GifCard = ({ string_gif, searchString }: _Props) => {
   const gif: Gif = JSON.parse(string_gif);
 
   const getLike = async () => {
-    const response = await fetch("/api/like");
+    const response = await fetch("/api/like", {
+      credentials: "include"
+    });
     const response_data = await response.json();
     if (!response_data.err) {
       setLikedGifs(response_data.likes);
@@ -42,9 +44,10 @@ const GifCard = ({ string_gif, searchString }: _Props) => {
         else return "";
       })[0];
 
-      alert(gifId)
+      // toast({title:gifId})
 
       const response = await fetch("/api/like", {
+        credentials: "include",
         method: "DELETE",
         body: JSON.stringify({
           id: gifId,
@@ -66,6 +69,7 @@ const GifCard = ({ string_gif, searchString }: _Props) => {
     } else {
       // Add Like
       const response = await fetch("/api/like", {
+        credentials: "include",
         method: "POST",
         body: JSON.stringify({
           gif: string_gif,
@@ -83,7 +87,7 @@ const GifCard = ({ string_gif, searchString }: _Props) => {
         toast({ title: "Liked ❤" });
       } else {
         setLiked(false);
-        toast({ title: "Can Not Liked ",description:response_data.err });
+        toast({ title: "Can Not Liked ", description: response_data.err });
       }
     }
   };

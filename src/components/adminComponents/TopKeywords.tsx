@@ -35,7 +35,9 @@ const TopKeywords = () => {
   const getUserSearchTimeLine = async () => {
     setLoading(true);
     const response = await fetch(
-      `/api/admin/top-search-like?ltDate=${ltDate}&gtDate=${gtDate}`
+      `/api/admin/top-search-like?ltDate=${ltDate}&gtDate=${gtDate}`, {
+        credentials: "include"
+      }
     );
 
     const response_data = await response.json();

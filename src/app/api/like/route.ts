@@ -15,8 +15,8 @@ type Body = {
 
 // Like Request
 export async function POST(req: NextRequest) {
+  const token = cookies().get("token");
   try {
-    const token = cookies().get("token");
 
     if (!token) return Response.json({ data: false, err: "Login Expired" });
 

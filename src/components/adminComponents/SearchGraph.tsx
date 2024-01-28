@@ -36,7 +36,9 @@ const SearchGraph = () => {
   const getUserSearchTimeLine = async () => {
     setLoading(true);
     const response = await fetch(
-      `/api/admin/user-search-like-timeline?ltDate=${ltDate}&gtDate=${gtDate}`
+      `/api/admin/user-search-like-timeline?ltDate=${ltDate}&gtDate=${gtDate}`, {
+        credentials: "include"
+      }
     );
 
     const response_data = await response.json();
@@ -104,11 +106,16 @@ const SearchGraph = () => {
       })
     );
 
-    arrayFromMap = arrayFromMap.sort((a, b) => compareDates(a.date, b.date));
+    if (arrayFromMap.length) {
+      arrayFromMap = arrayFromMap.sort((a, b) => compareDates(a.date, b.date));
 
-    setDataForGraph(arrayFromMap);
+      setDataForGraph(arrayFromMap);
 
-    console.log(arrayFromMap);
+      console.log(arrayFromMap);
+    }else{
+      console.log(arrayFromMap,"arrayFromMap length is short")
+    }
+
     setLoading(false);
   }, [timeline]);
 

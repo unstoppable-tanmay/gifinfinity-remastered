@@ -7,8 +7,8 @@ import { cookies } from "next/headers";
 export async function GET(req: NextRequest) {
   // Prisma Client
   const prisma = new PrismaClient();
+  const token = cookies().get("admintoken");
   try {
-    const token = cookies().get("admintoken");
 
     if (!token) Response.json({ data: false, err: "Login Expired" });
 

@@ -8,8 +8,8 @@ const prisma = new PrismaClient();
 
 // Search Request
 export async function GET(req: NextRequest) {
+  const token = cookies().get("token");
   try {
-    const token = cookies().get("token");
 
     if (!token) return Response.json({ data: false, err: "Login Expired" });
 

@@ -1,3 +1,5 @@
+'use client'
+
 import AdminNav from "@/components/adminComponents/AdminNav";
 import Analytics from "@/components/adminComponents/Analytics";
 import Link from "next/link";
