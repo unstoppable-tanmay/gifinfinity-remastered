@@ -1,5 +1,3 @@
-"use client";
-
 import Nav from "../../components/userComponents/Nav";
 import Search from "@/components/userComponents/Search";
 import Featured from "@/components/userComponents/Featured";

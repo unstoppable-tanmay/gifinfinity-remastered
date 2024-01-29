@@ -8,6 +8,8 @@ import { Gif } from "@/types/giftypes";
 import useUser from "@/store/useUser";
 import { motion } from "framer-motion";
 import { toast } from "../ui/use-toast";
+import { VerticalAlignBottomOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 
 type _Props = {
   string_gif: string;
@@ -23,7 +25,7 @@ const GifCard = ({ string_gif, searchString }: _Props) => {
 
   const getLike = async () => {
     const response = await fetch("/api/like", {
-      credentials: "include"
+      credentials: "include",
     });
     const response_data = await response.json();
     if (!response_data.err) {
@@ -143,10 +145,15 @@ const GifCard = ({ string_gif, searchString }: _Props) => {
             className="w-full h-full object-cover"
           />
           <div className="top_overlay absolute w-full h-[50%] bottom-0 left-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-          <div className="text_content absolute bottom-0 left-0 flex flex-col gap-3 p-3 pb-6">
-            <div className="name text-white text-md font-medium">
+          <div className="text_content absolute bottom-0 left-0 flex justify-between items-center w-full gap-3 p-4 pb-6">
+            <div className="name text-white text-md font-medium text-ellipsis">
               {gif.title}
             </div>
+            <a href={gif.url} download>
+              <Button className="flex items-center justify-center">
+                <VerticalAlignBottomOutlined className="text-xl font-semibold text-white" />
+              </Button>
+            </a>
           </div>
         </div>
       </DialogContent>

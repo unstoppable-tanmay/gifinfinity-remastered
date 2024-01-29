@@ -7,8 +7,6 @@
     email - string
     password - string
     createdAt - Date
-    featured - string[]
-    liked - string[]
 
 ## Search
 
@@ -27,12 +25,12 @@
 ## Like
 
     id - String
+    gif - String
     gifId - String
     userId - User - ObjectID
-    gifUrl - String
-    gifName - String
     likedAt - DateTime
     status - Boolean
+    searchString - String[]
 
 <!-- Database Password -->
 

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import GifCard from "./GifCard";
 import { gif_data } from "@/app/(home)/data";
